@@ -52,3 +52,4 @@ Installing ``aiohttp-things`` with pip: ::
 
   examples
   reference
+  releases

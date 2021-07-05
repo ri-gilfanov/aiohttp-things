@@ -17,12 +17,13 @@ class ContextMixin(AbstractView, metaclass=ABCMeta):
         self.context = {}
 
 
-class PrimaryKeyMixin(AbstractView, metaclass=ABCMeta):
+class PrimaryKeyMixin(ContextMixin, metaclass=ABCMeta):
     """
     Class based view mixin with primary key attribute.
     """
     #: Primary key from path variable for select an object from database.
     pk: Any
+
     #: Callable object for converting a primary key.
     pk_factory: Callable[..., Any] = lambda pk: pk
 
