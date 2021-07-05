@@ -56,8 +56,6 @@ Example of AIOHTTP application
 
 
   class Base(web.View, ContextMixin, PrimaryKeyMixin):
-      pk_factory = int
-
       async def get(self):
           pk_type = type(self.pk)
           self.context['Type of primary key'] = safe_json_value(pk_type)
