@@ -6,6 +6,6 @@ Views
   :members:
   :show-inheritance:
 
-.. autoclass:: aiohttp_things.views.PrimaryKeyMixin
+.. autoclass:: aiohttp_things.views.ItemMixin
   :members:
   :show-inheritance:

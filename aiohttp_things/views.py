@@ -17,7 +17,7 @@ class ContextMixin(AbstractView, metaclass=ABCMeta):
         self.context = {}
 
 
-class PrimaryKeyMixin(ContextMixin, metaclass=ABCMeta):
+class ItemMixin(ContextMixin, metaclass=ABCMeta):
     """
     Class based view mixin with primary key attribute.
     """
@@ -31,3 +31,7 @@ class PrimaryKeyMixin(ContextMixin, metaclass=ABCMeta):
         super().__init__(request)
         # Use regular expressions in routes for safe input
         self.pk = self.pk_factory(self.request.match_info.get('pk'))
+
+
+# synonyms
+PrimaryKeyMixin = ItemMixin
