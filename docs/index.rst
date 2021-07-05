@@ -39,114 +39,17 @@ Modest utility collection for development with `AIOHTTP
 <https://docs.aiohttp.org/>`_ framework.
 
 
-Simple example
---------------
-Example of AIOHTTP application
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. code-block:: python
+Installation
+------------
+Installing ``aiohttp-things`` with pip: ::
 
-  import json
-  import uuid
-  from aiohttp import web
-  from aiohttp_things.views import ContextMixin, PrimaryKeyMixin
+  pip install aiohttp-things
 
 
-  def safe_json_value(value):
-      try:
-          json.dumps(value)
-          return value
-      except (TypeError, OverflowError):
-          return str(value)
+.. toctree::
+  :maxdepth: 1
+  :caption: Contents
 
-
-  class Base(web.View, ContextMixin, PrimaryKeyMixin):
-      pk_factory = int
-
-      async def get(self):
-          pk_type = type(self.pk)
-          self.context['Type of primary key'] = safe_json_value(pk_type)
-          self.context['Value of primary key'] = safe_json_value(self.pk)
-          return web.json_response(self.context)
-
-
-  class IntegerExample(Base):
-      pk_factory = int
-
-
-  class UUIDExample(Base):
-      pk_factory = uuid.UUID
-
-
-  UUID = '[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}'
-  ROUTES = [
-      web.view('/integer/{pk:[0-9]+}', IntegerExample),
-      web.view(f'/uuid/{{pk:{UUID}}}', UUIDExample),
-  ]
-
-
-  async def app_factory():
-      app = web.Application()
-      app.add_routes(ROUTES)
-      return app
-
-
-  if __name__ == '__main__':
-      web.run_app(app_factory())
-
-Examples HTTP requests and response
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-* \http://0.0.0.0:8080/integer/1
-
-  .. code-block:: json
-
-    {
-      "Type of primary key": "<class 'int'>",
-      "Value of primary key": 1
-    }
-
-* \http://0.0.0.0:8080/integer/9999999999999
-
-  .. code-block:: json
-
-    {
-      "Type of primary key": "<class 'int'>",
-      "Value of primary key": 9999999999999
-    }
-
-* \http://0.0.0.0:8080/integer/a352da04-c1af-4a44-8a94-c37f8f37b2bc
-  ::
-
-    404: Not Found
-
-* \http://0.0.0.0:8080/integer/abc
-  ::
-
-    404: Not Found
-
-* \http://0.0.0.0:8080/uuid/a352da04-c1af-4a44-8a94-c37f8f37b2bc
-
-  .. code-block:: json
-
-    {
-      "Type of primary key": "<class 'uuid.UUID'>",
-      "Value of primary key": "a352da04-c1af-4a44-8a94-c37f8f37b2bc"
-    }
-
-* \http://0.0.0.0:8080/uuid/13d1d0e0-4787-4feb-8684-b3da32609743
-
-  .. code-block:: json
-
-    {
-      "Type of primary key": "<class 'uuid.UUID'>",
-      "Value of primary key": "13d1d0e0-4787-4feb-8684-b3da32609743"
-    }
-
-* \http://0.0.0.0:8080/uuid/1
-  ::
-
-    404: Not Found
-
-* \http://0.0.0.0:8080/uuid/abc
-  ::
-
-    404: Not Found
+  examples
+  reference
+  releases
