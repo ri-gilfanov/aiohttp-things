@@ -6,13 +6,25 @@ from aiohttp.web import Request
 
 
 class ContextMixin(AbstractView, metaclass=ABCMeta):
+    """
+    Class based view mixin with context attribute.
+    """
+    #: Dictionary for JSON response or HTML template response.
+    context: Mapping[str, Any]
+
     def __init__(self, request: Request) -> None:
         super().__init__(request)
-        self.context: Mapping[str, Any] = {}
+        self.context = {}
 
 
 class PrimaryKeyMixin(AbstractView, metaclass=ABCMeta):
-    pk_factory: Callable[..., Any] = str
+    """
+    Class based view mixin with primary key attribute.
+    """
+    #: Primary key from path variable for select an object from database.
+    pk: Any
+    #: Callable object for converting a primary key.
+    pk_factory: Callable[..., Any] = lambda pk: pk
 
     def __init__(self, request: Request) -> None:
         super().__init__(request)
