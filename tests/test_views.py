@@ -11,6 +11,7 @@ from aiohttp.test_utils import make_mocked_request
 from aiohttp_things import views
 from aiohttp_things.views import (
     ContextMixin,
+    InstanceMixin,
     Jinja2Mixin,
     JSONMixin,
     ListMixin,
@@ -45,6 +46,17 @@ def test_uuid_pk_view() -> None:
     req = make_mocked_request(METH_GET, f'/{pk}', match_info={'pk': pk})
     view = UUIDPrimaryKeyView(req)
     assert isinstance(view.pk, uuid.UUID)
+
+
+def test_instance_mixin() -> None:
+    class InstanceView(web.View, InstanceMixin):
+        pass
+
+    req = make_mocked_request(METH_GET, '/')
+    view = InstanceView(req)
+    assert view.instance is None
+    view.instance = 1
+    assert view.instance == 1
 
 
 def test_list_mixin() -> None:
