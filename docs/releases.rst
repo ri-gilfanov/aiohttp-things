@@ -1,5 +1,11 @@
 Releases
 ========
+Unreleased
+-------------
+**Changed**
+
+* ``views.ItemMixin`` renamed to ``views.InstanceMixin``.
+
 Version 0.5.0
 -------------
 **Removed**

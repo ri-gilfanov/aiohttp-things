@@ -1,7 +1,7 @@
 import json
 import uuid
 from aiohttp import web
-from aiohttp_things.views import ItemMixin, JSONMixin
+from aiohttp_things.views import InstanceMixin, JSONMixin
 
 
 def safe_json_value(value):
@@ -12,7 +12,7 @@ def safe_json_value(value):
         return str(value)
 
 
-class Base(web.View, ItemMixin, JSONMixin):
+class Base(web.View, InstanceMixin, JSONMixin):
     async def get(self):
         self.context['Type of primary key'] = safe_json_value(type(self.pk))
         self.context['Value of primary key'] = safe_json_value(self.pk)

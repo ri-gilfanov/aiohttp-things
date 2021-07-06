@@ -39,8 +39,12 @@ class PrimaryKeyMixin(AbstractView, metaclass=ABCMeta):
         self.pk = self.pk_factory(self.request.match_info.get('pk'))
 
 
-class ItemMixin(ContextMixin, PrimaryKeyMixin, metaclass=ABCMeta):
-    pass
+class InstanceMixin(ContextMixin, PrimaryKeyMixin, metaclass=ABCMeta):
+    instance: Any
+
+    def __init__(self, request: Request) -> None:
+        super().__init__(request)
+        self.instance = None
 
 
 class ListMixin(ContextMixin, metaclass=ABCMeta):
@@ -74,3 +78,7 @@ class Jinja2Mixin(ContextMixin, metaclass=ABCMeta):
 class JSONMixin(ContextMixin, metaclass=ABCMeta):
     async def finalize_response(self, **kwargs: Any) -> Response:
         return json_response(self.context, **kwargs)
+
+
+# synonyms
+ItemMixin = InstanceMixin

@@ -10,7 +10,7 @@ Views
   :members:
   :show-inheritance:
 
-.. autoclass:: aiohttp_things.views.ItemMixin
+.. autoclass:: aiohttp_things.views.InstanceMixin
   :members:
   :show-inheritance:
 
