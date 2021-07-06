@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "aiohttp-things"
-version = "0.2.0"
+version = "0.6.0"
 description = "Modest utility collection for development with AIOHTTP framework."
 authors = [
     "Ruslan Ilyasovich Gilfanov <ri.gilfanov@yandex.ru>",
@@ -16,6 +16,7 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Topic :: Internet",
     "Topic :: Internet :: WWW/HTTP",
+    "Typing :: Typed",
 ]
 keywords = ["aiohttp", "asyncio"]
 license = "MIT License"
@@ -29,12 +30,13 @@ python = "^3.7"
 aiohttp = "^3.7.4.post0"
 
 [tool.poetry.dev-dependencies]
+aiohttp_jinja2 = "*"
 flake8 = ">=3.9.2"
 isort = ">=5.9.1"
 mypy = ">=0.902"
 pytest = ">=6.2.4"
 pytest-cov = ">=2.12.1"
-Sphinx = ">=4.0.2"
+Sphinx = ">=4.0.3"
 sphinx_rtd_theme = ">=0.5.2"
 types-toml = ">=0.1.3"
 
