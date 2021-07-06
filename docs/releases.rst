@@ -1,5 +1,12 @@
 Releases
 ========
+Version 0.5.0
+-------------
+**Removed**
+
+* ``prepare_context()`` method removed from ``views.ContextMixin`` and
+  ``views.ListMixin``.
+
 Version 0.4.0
 -------------
 **Added**

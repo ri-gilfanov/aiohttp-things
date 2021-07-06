@@ -56,10 +56,7 @@ def test_list_mixin() -> None:
     item = 'test_value'
     assert isinstance(view.items, list)
     view.items.append(item)
-    view.prepare_context()
     assert item is view.items[0]
-    assert item is view.context['items'][0]
-    assert view.context['items'][0] is view.items[0]
 
 
 async def test_jinja2_mixin() -> None:

@@ -22,9 +22,6 @@ class ContextMixin(AbstractView, metaclass=ABCMeta):
         super().__init__(request)
         self.context = {}
 
-    def prepare_context(self) -> None:
-        ...
-
 
 class PrimaryKeyMixin(AbstractView, metaclass=ABCMeta):
     """
@@ -52,10 +49,6 @@ class ListMixin(ContextMixin, metaclass=ABCMeta):
     def __init__(self, request: Request) -> None:
         super().__init__(request)
         self.items = []
-
-    def prepare_context(self) -> None:
-        super().prepare_context()
-        self.context['items'] = self.items
 
 
 class Jinja2Mixin(ContextMixin, metaclass=ABCMeta):
