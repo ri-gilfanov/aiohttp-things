@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "aiohttp-things"
-version = "0.5.0"
+version = "0.6.0"
 description = "Modest utility collection for development with AIOHTTP framework."
 authors = [
     "Ruslan Ilyasovich Gilfanov <ri.gilfanov@yandex.ru>",

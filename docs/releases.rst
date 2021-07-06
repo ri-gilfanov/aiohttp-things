@@ -1,20 +1,22 @@
 Releases
 ========
-Unreleased
--------------
+Version 0.6
+-----------
 **Changed**
 
+* ``views.InstanceMixin`` and ``views.ListMixin`` inherited by 
+  ``aiohttp.abc.AbstractView``;
 * ``views.ItemMixin`` renamed to ``views.InstanceMixin``.
 
-Version 0.5.0
--------------
+Version 0.5
+-----------
 **Removed**
 
 * ``prepare_context()`` method removed from ``views.ContextMixin`` and
   ``views.ListMixin``.
 
-Version 0.4.0
--------------
+Version 0.4
+-----------
 **Added**
 
 ** added ``views.Jinja2Mixin`` (need install ``aiohttp-jinja2``);

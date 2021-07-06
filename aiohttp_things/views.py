@@ -39,7 +39,7 @@ class PrimaryKeyMixin(AbstractView, metaclass=ABCMeta):
         self.pk = self.pk_factory(self.request.match_info.get('pk'))
 
 
-class InstanceMixin(ContextMixin, PrimaryKeyMixin, metaclass=ABCMeta):
+class InstanceMixin(AbstractView, metaclass=ABCMeta):
     instance: Any
 
     def __init__(self, request: Request) -> None:
@@ -47,7 +47,7 @@ class InstanceMixin(ContextMixin, PrimaryKeyMixin, metaclass=ABCMeta):
         self.instance = None
 
 
-class ListMixin(ContextMixin, metaclass=ABCMeta):
+class ListMixin(AbstractView, metaclass=ABCMeta):
     items: Iterable[Any]
 
     def __init__(self, request: Request) -> None:
