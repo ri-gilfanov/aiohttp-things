@@ -29,14 +29,16 @@ class PrimaryKeyMixin(AbstractView, metaclass=ABCMeta):
     """
     #: Primary key from path variable for select an object from database.
     #: Use regular expressions in routes for safe input
-    pk: Any
+    pk: Any = None
 
     #: Callable object for converting a primary key.
     pk_factory: Callable[..., Any] = lambda pk: pk
 
     def __init__(self, request: Request) -> None:
         super().__init__(request)
-        self.pk = self.pk_factory(self.request.match_info.get('pk'))
+        pk = self.request.match_info.get('pk')
+        if pk:
+            self.pk = self.pk_factory(pk)
 
 
 class InstanceMixin(AbstractView, metaclass=ABCMeta):
