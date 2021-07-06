@@ -55,7 +55,7 @@ Example of AIOHTTP application
   import json
   import uuid
   from aiohttp import web
-  from aiohttp_things.views import ItemMixin
+  from aiohttp_things.views import ItemMixin, JSONMixin
 
 
   def safe_json_value(value):
@@ -66,12 +66,11 @@ Example of AIOHTTP application
           return str(value)
 
 
-  class Base(web.View, ItemMixin):
+  class Base(web.View, ItemMixin, JSONMixin):
       async def get(self):
-          pk_type = type(self.pk)
-          self.context['Type of primary key'] = safe_json_value(pk_type)
+          self.context['Type of primary key'] = safe_json_value(type(self.pk))
           self.context['Value of primary key'] = safe_json_value(self.pk)
-          return web.json_response(self.context)
+          return await self.finalize_response()
 
 
   class IntegerExample(Base):
@@ -97,6 +96,7 @@ Example of AIOHTTP application
 
   if __name__ == '__main__':
       web.run_app(app_factory())
+
 
 Examples HTTP requests and response
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

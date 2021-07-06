@@ -1,20 +1,33 @@
 Releases
 ========
+Version 0.4.0
+-------------
+**Added**
+
+** added ``views.Jinja2Mixin`` (need install ``aiohttp-jinja2``);
+** added ``views.JSONMxixin``;
+** added ``views.ListMixin``;
+
+**Changed**
+
+* ``views.PrimaryKeyMixin`` allocated in a separate mixin;
+* ``views.ItemMixin`` inherited by ``views.ContextMixin`` and
+  ``views.PrimaryKeyMixin``.
+
 Version 0.3.0
 -------------
 **Changed**
 
-* ``aiohttp_things.views.PrimaryKeyMixin`` renamed to
-  ``aiohttp_things.views.ItemMixin``.
+* ``views.PrimaryKeyMixin`` renamed to
+  ``views.ItemMixin``.
 
 **Added**
 
-* Added ``aiohttp_things.views.PrimaryKeyMixin`` synonym for
-  ``aiohttp_things.views.ItemMixin``.
+* Added ``views.PrimaryKeyMixin`` synonym for ``views.ItemMixin``.
 
 Version 0.2.0
 -------------
 **Changed**
 
-* Replace ``aiohttp.abc.AbstractView`` to ``aiohttp_things.views.ContextMixin``
-  in parent classes of ``aiohttp_things.views.PrimaryKeyMixin``.
+* Replace ``aiohttp.abc.AbstractView`` to ``views.ContextMixin`` in parent
+  classes of ``views.PrimaryKeyMixin``.
