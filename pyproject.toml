@@ -7,6 +7,7 @@ authors = [
 ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
+    "Framework :: aiohttp",
     "Framework :: AsyncIO",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
@@ -16,6 +17,8 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Topic :: Internet",
     "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
     "Typing :: Typed",
 ]
 keywords = ["aiohttp", "asyncio"]
@@ -30,13 +33,13 @@ python = "^3.7"
 aiohttp = "^3.7.4.post0"
 
 [tool.poetry.dev-dependencies]
-aiohttp_jinja2 = "*"
+aiohttp_jinja2 = ">=1.4.2"
 flake8 = ">=3.9.2"
-isort = ">=5.9.1"
-mypy = ">=0.902"
+isort = ">=5.9.2"
+mypy = ">=0.910"
 pytest = ">=6.2.4"
 pytest-cov = ">=2.12.1"
-Sphinx = ">=4.0.3"
+Sphinx = ">=4.1.0"
 sphinx_rtd_theme = ">=0.5.2"
 types-toml = ">=0.1.3"
 
