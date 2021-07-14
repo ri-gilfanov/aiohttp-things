@@ -74,11 +74,11 @@ Example of AIOHTTP application
 
 
   class IntegerExample(Base):
-      pk_factory = int
+      pk_adapter = int
 
 
   class UUIDExample(Base):
-      pk_factory = uuid.UUID
+      pk_adapter = uuid.UUID
 
 
   UUID = '[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}'
