@@ -28,6 +28,26 @@ def test_context_view() -> None:
     assert isinstance(view.context, dict)
 
 
+def test_integer_pk_view_deprecated() -> None:
+    class IntegerPrimaryKeyView(web.View, PrimaryKeyMixin):
+        pk_factory = int
+
+    pk = '1'
+    req = make_mocked_request(METH_GET, f'/{pk}', match_info={'pk': pk})
+    view = IntegerPrimaryKeyView(req)
+    assert isinstance(view.pk, int)
+
+
+def test_uuid_pk_view_deprecated() -> None:
+    class UUIDPrimaryKeyView(web.View, PrimaryKeyMixin):
+        pk_factory = uuid.UUID
+
+    pk = str(uuid.uuid4())
+    req = make_mocked_request(METH_GET, f'/{pk}', match_info={'pk': pk})
+    view = UUIDPrimaryKeyView(req)
+    assert isinstance(view.pk, uuid.UUID)
+
+
 def test_integer_pk_view() -> None:
     class IntegerPrimaryKeyView(web.View, PrimaryKeyMixin):
         pk_adapter = int

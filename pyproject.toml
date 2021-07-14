@@ -7,7 +7,7 @@ authors = [
 ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
-    "Framework :: aiohttp",
+    # "Framework :: aiohttp",
     "Framework :: AsyncIO",
     "Operating System :: OS Independent",
     "Programming Language :: Python",

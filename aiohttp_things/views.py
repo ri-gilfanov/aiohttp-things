@@ -41,11 +41,10 @@ class PrimaryKeyMixin(AbstractView, metaclass=ABCMeta):
         pk = self.request.match_info.get('pk')
         if hasattr(self, 'pk_factory'):
             msg = (
-                "Attribute `PrimaryKeyMixin.pk_factory` deprecated since "
-                "version 0.7.0 and will be removed in version 0.9.0. "
-                "Use attribute `PrimaryKeyMixin.pk_adapter`."
+                "The `PrimaryKeyMixin.pk_factory` attribute has been "
+                "deprecated. Use the `PrimaryKeyMixin.pk_adapter` attribute."
             )
-            warnings.warn(msg, DeprecationWarning)
+            warnings.warn(msg, DeprecationWarning, stacklevel=2)
         if pk:
             pk_factory = getattr(self, 'pk_factory', lambda v: v)
             pk_adapter = getattr(self, 'pk_adapter', pk_factory)
