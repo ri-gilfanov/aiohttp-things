@@ -30,7 +30,7 @@ def test_context_view() -> None:
 
 def test_integer_pk_view() -> None:
     class IntegerPrimaryKeyView(web.View, PrimaryKeyMixin):
-        pk_factory = int
+        pk_adapter = int
 
     pk = '1'
     req = make_mocked_request(METH_GET, f'/{pk}', match_info={'pk': pk})
@@ -40,7 +40,7 @@ def test_integer_pk_view() -> None:
 
 def test_uuid_pk_view() -> None:
     class UUIDPrimaryKeyView(web.View, PrimaryKeyMixin):
-        pk_factory = uuid.UUID
+        pk_adapter = uuid.UUID
 
     pk = str(uuid.uuid4())
     req = make_mocked_request(METH_GET, f'/{pk}', match_info={'pk': pk})

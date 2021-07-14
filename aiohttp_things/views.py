@@ -1,3 +1,4 @@
+import warnings
 from abc import ABCMeta
 from typing import Any, Callable, Dict, Iterable
 
@@ -32,13 +33,23 @@ class PrimaryKeyMixin(AbstractView, metaclass=ABCMeta):
     pk: Any = None
 
     #: Callable object for converting a primary key.
-    pk_factory: Callable[..., Any] = lambda pk: pk
+    pk_adapter: Callable[..., Any]
+    pk_factory: Callable[..., Any]
 
     def __init__(self, request: Request) -> None:
         super().__init__(request)
         pk = self.request.match_info.get('pk')
+        if hasattr(self, 'pk_factory'):
+            msg = (
+                "Attribute `PrimaryKeyMixin.pk_factory` deprecated since "
+                "version 0.7.0 and will be removed in version 0.9.0. "
+                "Use attribute `PrimaryKeyMixin.pk_adapter`."
+            )
+            warnings.warn(msg, DeprecationWarning)
         if pk:
-            self.pk = self.pk_factory(pk)
+            pk_factory = getattr(self, 'pk_factory', lambda v: v)
+            pk_adapter = getattr(self, 'pk_adapter', pk_factory)
+            self.pk = pk_adapter(pk)
 
 
 class InstanceMixin(AbstractView, metaclass=ABCMeta):

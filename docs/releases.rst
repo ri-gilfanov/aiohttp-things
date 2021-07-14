@@ -1,5 +1,15 @@
 Releases
 ========
+Version 0.7
+-----------
+**Add**
+
+* ``views.PrimaryKeyMixin.pk_adapter`` instead ``views.PrimaryKeyMixin.pk_factory``.
+
+**Deprecated**
+
+* ``views.PrimaryKeyMixin.pk_factory``.
+
 Version 0.6
 -----------
 **Changed**
