@@ -52,12 +52,10 @@ class PrimaryKeyMixin(AbstractView, metaclass=ABCMeta):
 
 
 class ItemMixin(AbstractView, metaclass=ABCMeta):
-    instance: Any
     item: Any
 
     def __init__(self, request: Request) -> None:
         super().__init__(request)
-        self.instance = None
         self.item = None
 
 

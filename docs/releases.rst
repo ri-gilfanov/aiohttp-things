@@ -7,6 +7,10 @@ Unreleased
 * Added ``ContextMixin``, ``ItemMixin``, ``Jinja2Mixin``, ``JSONMixin``,
   ``ListMixin``, ``PrimaryKeyMixin`` to package namespace.
 
+**Removed**
+
+* ``instance`` attribute removed from ``ItemMixin``, use ``ItemMixin.item``.
+
 Version 0.8
 -----------
 **Added**

@@ -69,15 +69,15 @@ def test_uuid_pk_view() -> None:
     assert isinstance(view.pk, uuid.UUID)
 
 
-def test_instance_mixin() -> None:
+def test_item_mixin() -> None:
     class InstanceView(web.View, ItemMixin):
         pass
 
     req = make_mocked_request(METH_GET, '/')
     view = InstanceView(req)
-    assert view.instance is None
-    view.instance = 1
-    assert view.instance == 1
+    assert view.item is None
+    view.item = 1
+    assert view.item == 1
 
 
 def test_list_mixin() -> None:
