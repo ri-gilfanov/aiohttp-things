@@ -15,6 +15,7 @@ from aiohttp_things.views import (
     Jinja2Mixin,
     JSONMixin,
     ListMixin,
+    PaginationMixin,
     PrimaryKeyMixin,
     ResponseFormatMixin,
 )
@@ -29,24 +30,14 @@ def test_context_view() -> None:
     assert isinstance(view.context, dict)
 
 
-def test_integer_pk_view_deprecated() -> None:
-    class IntegerPrimaryKeyView(web.View, PrimaryKeyMixin):
-        pk_factory = int
+def test_pagination_view() -> None:
+    class PaginationView(web.View, PaginationMixin):
+        page_adapter = int
 
-    pk = '1'
-    req = make_mocked_request(METH_GET, f'/{pk}', match_info={'pk': pk})
-    view = IntegerPrimaryKeyView(req)
-    assert isinstance(view.pk, int)
-
-
-def test_uuid_pk_view_deprecated() -> None:
-    class UUIDPrimaryKeyView(web.View, PrimaryKeyMixin):
-        pk_factory = uuid.UUID
-
-    pk = str(uuid.uuid4())
-    req = make_mocked_request(METH_GET, f'/{pk}', match_info={'pk': pk})
-    view = UUIDPrimaryKeyView(req)
-    assert isinstance(view.pk, uuid.UUID)
+    req = make_mocked_request(METH_GET, '/?page=2')
+    view = PaginationView(req)
+    assert isinstance(view.page, int)
+    assert view.page == 2
 
 
 def test_integer_pk_view() -> None:
@@ -69,15 +60,15 @@ def test_uuid_pk_view() -> None:
     assert isinstance(view.pk, uuid.UUID)
 
 
-def test_instance_mixin() -> None:
+def test_item_mixin() -> None:
     class InstanceView(web.View, ItemMixin):
         pass
 
     req = make_mocked_request(METH_GET, '/')
     view = InstanceView(req)
-    assert view.instance is None
-    view.instance = 1
-    assert view.instance == 1
+    assert view.item is None
+    view.item = 1
+    assert view.item == 1
 
 
 def test_list_mixin() -> None:

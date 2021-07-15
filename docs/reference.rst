@@ -6,6 +6,10 @@ Views
   :members:
   :show-inheritance:
 
+  .. autoclass:: aiohttp_things.views.PaginationMixin
+    :members:
+    :show-inheritance:
+
 .. autoclass:: aiohttp_things.views.PrimaryKeyMixin
   :members:
   :show-inheritance:

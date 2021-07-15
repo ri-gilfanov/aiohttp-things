@@ -1,5 +1,19 @@
 Releases
 ========
+Version 0.9
+-----------
+**Added**
+
+* Added ``views.PaginationMixin``;
+* Added ``ContextMixin``, ``ItemMixin``, ``Jinja2Mixin``, ``JSONMixin``,
+  ``ListMixin``, ``PaginationMixin``, ``PrimaryKeyMixin`` to package namespace.
+
+**Removed**
+
+* ``instance`` attribute removed from ``ItemMixin``, use ``ItemMixin.item``;
+* ``pk_factory`` attribute removed from ``PrimaryKeyMixin``, use
+  ``PrimaryKeyMixin.pk_adapter``.
+
 Version 0.8
 -----------
 **Added**
