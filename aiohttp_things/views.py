@@ -1,5 +1,4 @@
-import warnings
-from abc import ABC, ABCMeta
+from abc import ABCMeta
 from typing import Any, Callable, Dict, Iterable
 
 from aiohttp.abc import AbstractView
@@ -46,20 +45,12 @@ class PrimaryKeyMixin(AbstractView, metaclass=ABCMeta):
 
     #: Callable object for converting a primary key.
     pk_adapter: Callable[..., Any]
-    pk_factory: Callable[..., Any]
 
     def __init__(self, request: Request) -> None:
         super().__init__(request)
         pk = self.request.match_info.get('pk')
-        if hasattr(self, 'pk_factory'):
-            msg = (
-                "The `PrimaryKeyMixin.pk_factory` attribute has been "
-                "deprecated. Use the `PrimaryKeyMixin.pk_adapter` attribute."
-            )
-            warnings.warn(msg, DeprecationWarning, stacklevel=2)
         if pk:
-            pk_factory = getattr(self, 'pk_factory', lambda v: v)
-            pk_adapter = getattr(self, 'pk_adapter', pk_factory)
+            pk_adapter = getattr(self, 'pk_adapter', lambda v: v)
             self.pk = pk_adapter(pk)
 
 

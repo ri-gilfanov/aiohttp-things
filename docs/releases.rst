@@ -10,7 +10,9 @@ Unreleased
 
 **Removed**
 
-* ``instance`` attribute removed from ``ItemMixin``, use ``ItemMixin.item``.
+* ``instance`` attribute removed from ``ItemMixin``, use ``ItemMixin.item``;
+* ``pk_factory`` attribute removed from ``PrimaryKeyMixin``, use
+  ``PrimaryKeyMixin.pk_adapter``.
 
 Version 0.8
 -----------
