@@ -1,7 +1,7 @@
 Releases
 ========
-Unreleased
-----------
+Version 0.9
+-----------
 **Added**
 
 * Added ``views.PaginationMixin``;
