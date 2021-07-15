@@ -11,11 +11,12 @@ from aiohttp.test_utils import make_mocked_request
 from aiohttp_things import views
 from aiohttp_things.views import (
     ContextMixin,
-    InstanceMixin,
+    ItemMixin,
     Jinja2Mixin,
     JSONMixin,
     ListMixin,
     PrimaryKeyMixin,
+    ResponseFormatMixin,
 )
 
 
@@ -69,7 +70,7 @@ def test_uuid_pk_view() -> None:
 
 
 def test_instance_mixin() -> None:
-    class InstanceView(web.View, InstanceMixin):
+    class InstanceView(web.View, ItemMixin):
         pass
 
     req = make_mocked_request(METH_GET, '/')
@@ -125,3 +126,17 @@ async def test_json_mixin() -> None:
     resp = await view.finalize_response()
     assert isinstance(resp.body, bytes)
     assert json.loads(resp.body) == data
+
+
+async def test_response_format_mixin() -> None:
+    class ResponseFormatView(web.View, ResponseFormatMixin):
+        pass
+
+    req = make_mocked_request(METH_GET, '/some', match_info={'format': '.html'})
+    view = ResponseFormatView(req)
+    assert view.response_format == '.html'
+
+    req = make_mocked_request(METH_GET, '/some.json',
+                              match_info={'format': '.json'})
+    view = ResponseFormatView(req)
+    assert view.response_format == '.json'

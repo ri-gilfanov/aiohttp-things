@@ -51,12 +51,14 @@ class PrimaryKeyMixin(AbstractView, metaclass=ABCMeta):
             self.pk = pk_adapter(pk)
 
 
-class InstanceMixin(AbstractView, metaclass=ABCMeta):
+class ItemMixin(AbstractView, metaclass=ABCMeta):
     instance: Any
+    item: Any
 
     def __init__(self, request: Request) -> None:
         super().__init__(request)
         self.instance = None
+        self.item = None
 
 
 class ListMixin(AbstractView, metaclass=ABCMeta):
@@ -92,5 +94,13 @@ class JSONMixin(ContextMixin, metaclass=ABCMeta):
         return json_response(self.context, **kwargs)
 
 
+class ResponseFormatMixin(Jinja2Mixin, JSONMixin):
+    response_format: str
+
+    def __init__(self, request: Request) -> None:
+        super().__init__(request)
+        self.response_format = self.request.match_info.get('format', '.html')
+
+
 # synonyms
-ItemMixin = InstanceMixin
+InstanceMixin = ItemMixin

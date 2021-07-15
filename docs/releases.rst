@@ -1,5 +1,14 @@
 Releases
 ========
+Unreleased
+----------
+**Added**
+* ``ResponseFormatMixin``
+
+**Changed**
+* ``views.InstanceMixin`` class renamed to ``views.ItemMixin``;
+* ``views.ItemMixin`` synonym renamed to ``views.InstanceMixin``.
+
 Version 0.7
 -----------
 **Add**
