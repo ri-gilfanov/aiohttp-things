@@ -10,7 +10,7 @@ Views
   :members:
   :show-inheritance:
 
-.. autoclass:: aiohttp_things.views.InstanceMixin
+.. autoclass:: aiohttp_things.views.ItemMixin
   :members:
   :show-inheritance:
 
@@ -25,5 +25,9 @@ Response mixins
   :show-inheritance:
 
 .. autoclass:: aiohttp_things.views.JSONMixin
+  :members:
+  :show-inheritance:
+
+.. autoclass:: aiohttp_things.views.ResponseFormatMixin
   :members:
   :show-inheritance:
