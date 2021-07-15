@@ -1,5 +1,12 @@
 Releases
 ========
+Unreleased
+----------
+**Added**
+
+* Added ``ContextMixin``, ``ItemMixin``, ``Jinja2Mixin``, ``JSONMixin``,
+  ``ListMixin``, ``PrimaryKeyMixin`` to package namespace.
+
 Version 0.8
 -----------
 **Added**
