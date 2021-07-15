@@ -1,5 +1,5 @@
 import warnings
-from abc import ABCMeta
+from abc import ABC, ABCMeta
 from typing import Any, Callable, Dict, Iterable
 
 from aiohttp.abc import AbstractView
@@ -22,6 +22,18 @@ class ContextMixin(AbstractView, metaclass=ABCMeta):
     def __init__(self, request: Request) -> None:
         super().__init__(request)
         self.context = {}
+
+
+class PaginationMixin(AbstractView, metaclass=ABCMeta):
+    page: Any = None
+    page_adapter: Callable[..., Any]
+
+    def __init__(self, request: Request) -> None:
+        super().__init__(request)
+        page = self.request.rel_url.query.get('page')
+        if page:
+            page_adapter = getattr(self, 'page_adapter', lambda v: v)
+            self.page = page_adapter(page)
 
 
 class PrimaryKeyMixin(AbstractView, metaclass=ABCMeta):

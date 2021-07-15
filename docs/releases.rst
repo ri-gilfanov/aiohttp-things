@@ -4,8 +4,9 @@ Unreleased
 ----------
 **Added**
 
+* Added ``views.PaginationMixin``;
 * Added ``ContextMixin``, ``ItemMixin``, ``Jinja2Mixin``, ``JSONMixin``,
-  ``ListMixin``, ``PrimaryKeyMixin`` to package namespace.
+  ``ListMixin``, ``PaginationMixin``, ``PrimaryKeyMixin`` to package namespace.
 
 **Removed**
 

@@ -15,6 +15,7 @@ from aiohttp_things.views import (
     Jinja2Mixin,
     JSONMixin,
     ListMixin,
+    PaginationMixin,
     PrimaryKeyMixin,
     ResponseFormatMixin,
 )
@@ -27,6 +28,17 @@ def test_context_view() -> None:
     req = make_mocked_request(METH_GET, '/')
     view = ContextView(req)
     assert isinstance(view.context, dict)
+
+
+def test_pagination_view() -> None:
+    class PaginationView(web.View, PaginationMixin):
+        page_adapter = int
+
+    pk = '1'
+    req = make_mocked_request(METH_GET, f'/?page=2')
+    view = PaginationView(req)
+    assert isinstance(view.page, int)
+    assert view.page == 2
 
 
 def test_integer_pk_view_deprecated() -> None:

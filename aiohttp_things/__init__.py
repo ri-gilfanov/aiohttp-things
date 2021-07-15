@@ -5,6 +5,7 @@ from aiohttp_things.views import (
     Jinja2Mixin,
     JSONMixin,
     ListMixin,
+    PaginationMixin,
     PrimaryKeyMixin,
 )
 
@@ -16,5 +17,6 @@ __all__ = [
     'Jinja2Mixin',
     'JSONMixin',
     'ListMixin',
+    'PaginationMixin',
     'PrimaryKeyMixin',
 ]
