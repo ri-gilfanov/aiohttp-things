@@ -1,4 +1,4 @@
-from aiohttp_things import views
+from aiohttp_things import handlers, views
 from aiohttp_things.views import (
     ContextMixin,
     ItemMixin,
@@ -11,6 +11,7 @@ from aiohttp_things.views import (
 
 __version__ = '0.9.0'
 __all__ = [
+    'handlers',
     'views',
     'ContextMixin',
     'ItemMixin',

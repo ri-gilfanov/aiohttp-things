@@ -1,5 +1,14 @@
 Releases
+========Releases
 ========
+Unreleased
+----------
+**Changed**
+
+* ``views`` module renamed to ``handlers``;
+* ``handlers`` temporarily imported to empty ``views`` module for backward
+  compatibility.
+
 Version 0.9
 -----------
 **Added**
