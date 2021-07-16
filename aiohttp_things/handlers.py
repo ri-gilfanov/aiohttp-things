@@ -1,14 +1,39 @@
-from abc import ABCMeta
-from typing import Any, Callable, Dict, Iterable
+"""
+Expandable abstraction and mixins for AIOHTTP class based request handlers.
+"""
+from abc import ABCMeta, abstractmethod
+from typing import Any, Awaitable, Callable, Dict, Generator, Iterable
 
 from aiohttp.abc import AbstractView
-from aiohttp.web import Request, Response, json_response
+from aiohttp.web import Request, Response, StreamResponse, json_response
 
 try:
     import aiohttp_jinja2
     HAS_AIOHTTP_JINJA2 = True
 except ImportError:
     HAS_AIOHTTP_JINJA2 = False
+
+
+class AbstractHandler(AbstractView, metaclass=ABCMeta):
+    requested_method: Callable[[], Awaitable[StreamResponse]]
+
+    def __init__(self, request: Request):
+        super().__init__(request)
+
+    def __await__(self) -> Generator[Any, None, StreamResponse]:
+        return self.handle_request().__await__()
+
+    @abstractmethod
+    async def handle_request(self) -> StreamResponse:
+        ...
+
+    @abstractmethod
+    async def identify_requested_method(self) -> None:
+        ...
+
+    @abstractmethod
+    async def finalize_response(self) -> StreamResponse:
+        ...
 
 
 class ContextMixin(AbstractView, metaclass=ABCMeta):

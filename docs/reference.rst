@@ -2,13 +2,17 @@ Reference
 =========
 Views
 -----
+.. autoclass:: aiohttp_things.views.AbstractHandler
+  :members:
+  :show-inheritance:
+
 .. autoclass:: aiohttp_things.views.ContextMixin
   :members:
   :show-inheritance:
 
-  .. autoclass:: aiohttp_things.views.PaginationMixin
-    :members:
-    :show-inheritance:
+.. autoclass:: aiohttp_things.views.PaginationMixin
+  :members:
+  :show-inheritance:
 
 .. autoclass:: aiohttp_things.views.PrimaryKeyMixin
   :members:

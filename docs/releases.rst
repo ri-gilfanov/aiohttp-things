@@ -1,13 +1,16 @@
 Releases
-========Releases
 ========
 Unreleased
 ----------
+**Added**
+
+* Added ``handlers.AbstractHandler``.
+
 **Changed**
 
 * ``views`` module renamed to ``handlers``;
-* ``handlers`` temporarily imported to empty ``views`` module for backward
-  compatibility.
+* classes from ``handlers`` temporarily imported to empty ``views`` module for
+  backward compatibility.
 
 Version 0.9
 -----------
