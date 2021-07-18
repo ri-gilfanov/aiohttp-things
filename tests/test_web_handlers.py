@@ -1,20 +1,20 @@
 import json
 import uuid
 
-import aiohttp_jinja2
-import jinja2
 import pytest
-from aiohttp import web
 from aiohttp.hdrs import METH_GET, METH_POST
 from aiohttp.test_utils import make_mocked_request
-from aiohttp.web_response import json_response
+from aiohttp.web_app import Application
+from aiohttp.web_exceptions import HTTPMethodNotAllowed
+from aiohttp.web_response import StreamResponse, json_response
+from aiohttp.web_urldispatcher import View
 
 import aiohttp_things as ahth
 from aiohttp_things import web_handlers
 
 
 def test_context_view() -> None:
-    class ContextView(web.View, ahth.ContextMixin):
+    class ContextView(View, ahth.ContextMixin):
         pass
 
     req = make_mocked_request(METH_GET, '/')
@@ -24,20 +24,17 @@ def test_context_view() -> None:
 
 async def test_http_method_view() -> None:
     class HTTPMethodView(ahth.HTTPMethodMixin):
-        async def handle_request(self) -> web.StreamResponse:
+        async def handle_request(self) -> StreamResponse:
             await super().handle_request()
 
-            requested_method = await self.determine_requested_method()
-            if not requested_method:
-                raise web.HTTPMethodNotAllowed
-            return await requested_method()
+            return await (await self.determine_requested_method())()
 
     class GetMethodView(HTTPMethodView):
-        async def get(self) -> web.StreamResponse:
+        async def get(self) -> StreamResponse:
             return json_response({'get_method': 'success'})
 
     class PostMethodView(HTTPMethodView):
-        async def post(self) -> web.StreamResponse:
+        async def post(self) -> StreamResponse:
             return json_response({'get_method': 'success'})
 
     class GetAndPostMethodView(GetMethodView, PostMethodView):
@@ -51,23 +48,23 @@ async def test_http_method_view() -> None:
     await get_method_view
 
     get_method_view = GetMethodView(post_request)
-    with pytest.raises(web.HTTPMethodNotAllowed):
+    with pytest.raises(HTTPMethodNotAllowed):
         await get_method_view
 
     post_method_view = PostMethodView(post_request)
     await post_method_view
 
     post_method_view = PostMethodView(get_request)
-    with pytest.raises(web.HTTPMethodNotAllowed):
+    with pytest.raises(HTTPMethodNotAllowed):
         await get_method_view
 
     get_and_post_method_view = GetAndPostMethodView(unkown_request)
-    with pytest.raises(web.HTTPMethodNotAllowed):
+    with pytest.raises(HTTPMethodNotAllowed):
         await get_and_post_method_view
 
 
 def test_pagination_view() -> None:
-    class PaginationView(web.View, ahth.PaginationMixin):
+    class PaginationView(View, ahth.PaginationMixin):
         page_adapter = int
 
     req = make_mocked_request(METH_GET, '/?page=2')
@@ -77,7 +74,7 @@ def test_pagination_view() -> None:
 
 
 def test_integer_pk_view() -> None:
-    class IntegerPrimaryKeyView(web.View, ahth.PrimaryKeyMixin):
+    class IntegerPrimaryKeyView(View, ahth.PrimaryKeyMixin):
         pk_adapter = int
 
     pk = '1'
@@ -87,7 +84,7 @@ def test_integer_pk_view() -> None:
 
 
 def test_uuid_pk_view() -> None:
-    class UUIDPrimaryKeyView(web.View, ahth.PrimaryKeyMixin):
+    class UUIDPrimaryKeyView(View, ahth.PrimaryKeyMixin):
         pk_adapter = uuid.UUID
 
     pk = str(uuid.uuid4())
@@ -97,7 +94,7 @@ def test_uuid_pk_view() -> None:
 
 
 def test_item_mixin() -> None:
-    class InstanceView(web.View, ahth.ItemMixin):
+    class InstanceView(View, ahth.ItemMixin):
         pass
 
     req = make_mocked_request(METH_GET, '/')
@@ -108,7 +105,7 @@ def test_item_mixin() -> None:
 
 
 def test_list_mixin() -> None:
-    class ListView(web.View, ahth.ListMixin):
+    class ListView(View, ahth.ListMixin):
         pass
 
     req = make_mocked_request(METH_GET, '/')
@@ -119,16 +116,11 @@ def test_list_mixin() -> None:
     assert item is view.items[0]
 
 
-async def test_jinja2_mixin() -> None:
-    class Jinja2View(web.View, ahth.Jinja2Mixin):
+async def test_jinja2_mixin(jinja2_application: Application) -> None:
+    class Jinja2View(View, ahth.Jinja2Mixin):
         template = 'test.jinja2'
 
-    app = web.Application()
-    aiohttp_jinja2.setup(
-        app,
-        enable_async=True,
-        loader=jinja2.FileSystemLoader('tests/templates')
-    )
+    app = jinja2_application
     req = make_mocked_request(METH_GET, '/', app=app)
 
     web_handlers.HAS_AIOHTTP_JINJA2 = False
@@ -143,7 +135,7 @@ async def test_jinja2_mixin() -> None:
 
 
 async def test_json_mixin() -> None:
-    class JSONView(web.View, ahth.JSONMixin):
+    class JSONView(View, ahth.JSONMixin):
         pass
 
     req = make_mocked_request(METH_GET, '/')
@@ -156,7 +148,7 @@ async def test_json_mixin() -> None:
 
 
 async def test_response_format_mixin() -> None:
-    class ResponseFormatView(web.View, ahth.ResponseFormatMixin):
+    class ResponseFormatView(View, ahth.ResponseFormatMixin):
         pass
 
     req = make_mocked_request(METH_GET, '/some', match_info={'format': '.html'})
@@ -172,16 +164,11 @@ async def test_response_format_mixin() -> None:
     assert view.response_format == '.json'
 
 
-async def test_response_autoformat_mixin() -> None:
-    class ResponseAutoformatView(web.View, ahth.ResponseAutoformatMixin):
+async def test_response_autoformat(jinja2_application: Application) -> None:
+    class ResponseAutoformatView(View, ahth.ResponseAutoformatMixin):
         template = 'test.jinja2'
 
-    app = web.Application()
-    aiohttp_jinja2.setup(
-        app,
-        enable_async=True,
-        loader=jinja2.FileSystemLoader('tests/templates')
-    )
+    app = jinja2_application
 
     req = make_mocked_request(
         METH_GET,
