@@ -163,7 +163,45 @@ async def test_response_format_mixin() -> None:
     view = ResponseFormatView(req)
     assert view.response_format == '.html'
 
-    req = make_mocked_request(METH_GET, '/some.json',
-                              match_info={'format': '.json'})
+    req = make_mocked_request(
+        METH_GET,
+        '/some.json',
+        match_info={'format': '.json'},
+    )
     view = ResponseFormatView(req)
     assert view.response_format == '.json'
+
+
+async def test_response_autoformat_mixin() -> None:
+    class ResponseAutoformatView(web.View, ahth.ResponseAutoformatMixin):
+        template = 'test.jinja2'
+
+    app = web.Application()
+    aiohttp_jinja2.setup(
+        app,
+        enable_async=True,
+        loader=jinja2.FileSystemLoader('tests/templates')
+    )
+
+    req = make_mocked_request(
+        METH_GET,
+        '/some',
+        match_info={'format': '.html'},
+        app=app,
+    )
+    view = ResponseAutoformatView(req)
+    resp = await view.finalize_response()
+    assert isinstance(resp.body, bytes)
+    assert resp.body == b'<h1>Test</h1>'
+
+    req = make_mocked_request(
+        METH_GET,
+        '/some.json',
+        match_info={'format': '.json'},
+    )
+    view = ResponseAutoformatView(req)
+    data = {'numbers': [1, 2, 3]}
+    view.context = data
+    resp = await view.finalize_response()
+    assert isinstance(resp.body, bytes)
+    assert json.loads(resp.body) == data

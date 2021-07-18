@@ -43,3 +43,7 @@ Response mixins
 .. autoclass:: aiohttp_things.ResponseFormatMixin
   :members:
   :show-inheritance:
+
+  .. autoclass:: aiohttp_things.ResponseAutoformatMixin
+  :members:
+  :show-inheritance:
