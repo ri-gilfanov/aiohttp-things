@@ -71,6 +71,7 @@ class HTTPMethodMixin(AbstractHandler):
 class PaginationMixin(AbstractView, metaclass=ABCMeta):
     page: Any = None
     page_adapter: Callable[..., Any]
+    paginator: Any = None
 
     def __init__(self, request: Request) -> None:
         super().__init__(request)
