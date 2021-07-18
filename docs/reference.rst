@@ -1,7 +1,7 @@
 Reference
 =========
-Views
------
+Web handlers
+------------
 .. autoclass:: aiohttp_things.AbstractHandler
   :members:
   :show-inheritance:

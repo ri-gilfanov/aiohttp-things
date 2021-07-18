@@ -1,9 +1,9 @@
 """
 Reserved for simple views for traversal routing.
 
-More complex classes must naming handlers.
+More complex classes must naming web handlers.
 """
-from aiohttp_things.handlers import (
+from aiohttp_things.web_handlers import (
     ContextMixin,
     ItemMixin,
     Jinja2Mixin,

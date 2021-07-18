@@ -10,7 +10,7 @@ from aiohttp.test_utils import make_mocked_request
 from aiohttp.web_response import json_response
 
 import aiohttp_things as ahth
-from aiohttp_things import handlers
+from aiohttp_things import web_handlers
 
 
 def test_context_view() -> None:
@@ -131,11 +131,11 @@ async def test_jinja2_mixin() -> None:
     )
     req = make_mocked_request(METH_GET, '/', app=app)
 
-    handlers.HAS_AIOHTTP_JINJA2 = False
+    web_handlers.HAS_AIOHTTP_JINJA2 = False
     with pytest.raises(ImportError):
         view = Jinja2View(req)
 
-    handlers.HAS_AIOHTTP_JINJA2 = True
+    web_handlers.HAS_AIOHTTP_JINJA2 = True
     view = Jinja2View(req)
     resp = await view.finalize_response()
     assert isinstance(resp.body, bytes)
