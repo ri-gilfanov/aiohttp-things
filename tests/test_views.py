@@ -5,8 +5,9 @@ import aiohttp_jinja2
 import jinja2
 import pytest
 from aiohttp import web
-from aiohttp.hdrs import METH_GET
+from aiohttp.hdrs import METH_GET, METH_POST
 from aiohttp.test_utils import make_mocked_request
+from aiohttp.web_response import json_response
 
 import aiohttp_things as ahth
 from aiohttp_things import handlers
@@ -19,6 +20,50 @@ def test_context_view() -> None:
     req = make_mocked_request(METH_GET, '/')
     view = ContextView(req)
     assert isinstance(view.context, dict)
+
+
+async def test_http_method_view() -> None:
+    class HTTPMethodView(ahth.HTTPMethodMixin):
+        async def handle_request(self) -> web.StreamResponse:
+            await super().handle_request()
+
+            requested_method = await self.determine_requested_method()
+            if not requested_method:
+                raise web.HTTPMethodNotAllowed
+            return await requested_method()
+
+    class GetMethodView(HTTPMethodView):
+        async def get(self) -> web.StreamResponse:
+            return json_response({'get_method': 'success'})
+
+    class PostMethodView(HTTPMethodView):
+        async def post(self) -> web.StreamResponse:
+            return json_response({'get_method': 'success'})
+
+    class GetAndPostMethodView(GetMethodView, PostMethodView):
+        pass
+
+    get_request = make_mocked_request(METH_GET, '/')
+    post_request = make_mocked_request(METH_POST, '/')
+    unkown_request = make_mocked_request('UNKNOWN', '/')
+
+    get_method_view = GetMethodView(get_request)
+    await get_method_view
+
+    get_method_view = GetMethodView(post_request)
+    with pytest.raises(web.HTTPMethodNotAllowed):
+        await get_method_view
+
+    post_method_view = PostMethodView(post_request)
+    await post_method_view
+
+    post_method_view = PostMethodView(get_request)
+    with pytest.raises(web.HTTPMethodNotAllowed):
+        await get_method_view
+
+    get_and_post_method_view = GetAndPostMethodView(unkown_request)
+    with pytest.raises(web.HTTPMethodNotAllowed):
+        await get_and_post_method_view
 
 
 def test_pagination_view() -> None:

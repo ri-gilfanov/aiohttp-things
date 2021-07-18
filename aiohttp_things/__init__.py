@@ -2,6 +2,7 @@ from aiohttp_things import handlers, views
 from aiohttp_things.handlers import (
     AbstractHandler,
     ContextMixin,
+    HTTPMethodMixin,
     ItemMixin,
     Jinja2Mixin,
     JSONMixin,
@@ -17,6 +18,7 @@ __all__ = [
     'views',
     'AbstractHandler',
     'ContextMixin',
+    'HTTPMethodMixin',
     'ItemMixin',
     'Jinja2Mixin',
     'JSONMixin',

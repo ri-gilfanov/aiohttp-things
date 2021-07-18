@@ -5,13 +5,18 @@ from abc import ABCMeta, abstractmethod
 from typing import Any, Awaitable, Callable, Dict, Generator, Iterable, Optional
 
 from aiohttp.abc import AbstractView
+from aiohttp.hdrs import METH_ALL
 from aiohttp.web import Request, Response, StreamResponse, json_response
+from aiohttp.web_exceptions import HTTPMethodNotAllowed
 
 try:
     import aiohttp_jinja2
     HAS_AIOHTTP_JINJA2 = True
 except ImportError:
     HAS_AIOHTTP_JINJA2 = False
+
+
+REQUESTED_METHOD = Callable[[], Awaitable[StreamResponse]]
 
 
 class AbstractHandler(AbstractView, metaclass=ABCMeta):
@@ -26,13 +31,7 @@ class AbstractHandler(AbstractView, metaclass=ABCMeta):
         ...
 
     @abstractmethod
-    async def determine_requested_method(
-        self,
-    ) -> Optional[Callable[[], Awaitable[StreamResponse]]]:
-        ...
-
-    @abstractmethod
-    async def finalize_response(self) -> StreamResponse:
+    async def determine_requested_method(self,) -> Optional[REQUESTED_METHOD]:
         ...
 
 
@@ -46,6 +45,27 @@ class ContextMixin(AbstractView, metaclass=ABCMeta):
     def __init__(self, request: Request) -> None:
         super().__init__(request)
         self.context = {}
+
+
+class HTTPMethodMixin(AbstractHandler, metaclass=ABCMeta):
+    async def determine_requested_method(self) -> REQUESTED_METHOD:
+        await super().determine_requested_method()
+
+        http_method_name = self.request.method
+        if http_method_name not in METH_ALL:
+            raise HTTPMethodNotAllowed(self.request.method, {
+                m for m in METH_ALL if hasattr(self, m.lower())})
+
+        requested_method: REQUESTED_METHOD = getattr(
+            self,
+            http_method_name.lower(),
+            None,
+        )
+        if not requested_method:
+            raise HTTPMethodNotAllowed(self.request.method, {
+                m for m in METH_ALL if hasattr(self, m.lower())})
+
+        return requested_method
 
 
 class PaginationMixin(AbstractView, metaclass=ABCMeta):

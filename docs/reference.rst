@@ -10,6 +10,10 @@ Views
   :members:
   :show-inheritance:
 
+  .. autoclass:: aiohttp_things.HTTPMethodMixin
+    :members:
+    :show-inheritance:
+
 .. autoclass:: aiohttp_things.PaginationMixin
   :members:
   :show-inheritance:
