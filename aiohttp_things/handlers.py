@@ -2,7 +2,7 @@
 Expandable abstraction and mixins for AIOHTTP class based request handlers.
 """
 from abc import ABCMeta, abstractmethod
-from typing import Any, Awaitable, Callable, Dict, Generator, Iterable
+from typing import Any, Awaitable, Callable, Dict, Generator, Iterable, Optional
 
 from aiohttp.abc import AbstractView
 from aiohttp.web import Request, Response, StreamResponse, json_response
@@ -15,8 +15,6 @@ except ImportError:
 
 
 class AbstractHandler(AbstractView, metaclass=ABCMeta):
-    requested_method: Callable[[], Awaitable[StreamResponse]]
-
     def __init__(self, request: Request):
         super().__init__(request)
 
@@ -28,7 +26,9 @@ class AbstractHandler(AbstractView, metaclass=ABCMeta):
         ...
 
     @abstractmethod
-    async def identify_requested_method(self) -> None:
+    async def determine_requested_method(
+        self,
+    ) -> Optional[Callable[[], Awaitable[StreamResponse]]]:
         ...
 
     @abstractmethod
