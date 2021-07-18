@@ -1,5 +1,15 @@
 Releases
 ========
+Version 0.11
+------------
+**Added**
+
+* ``HTTPMethodMixin``.
+
+**Removed**
+
+* ``finalize_response`` method in ``AbstractHandler``.
+
 Version 0.10
 ------------
 **Added**
