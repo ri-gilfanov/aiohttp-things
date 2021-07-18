@@ -47,7 +47,7 @@ class ContextMixin(AbstractView, metaclass=ABCMeta):
         self.context = {}
 
 
-class HTTPMethodMixin(AbstractHandler, metaclass=ABCMeta):
+class HTTPMethodMixin(AbstractHandler):
     async def determine_requested_method(self) -> REQUESTED_METHOD:
         await super().determine_requested_method()
 
