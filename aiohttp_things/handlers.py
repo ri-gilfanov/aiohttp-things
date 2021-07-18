@@ -126,7 +126,3 @@ class ResponseFormatMixin(Jinja2Mixin, JSONMixin):
     def __init__(self, request: Request) -> None:
         super().__init__(request)
         self.response_format = self.request.match_info.get('format', '.html')
-
-
-# synonyms
-InstanceMixin = ItemMixin
