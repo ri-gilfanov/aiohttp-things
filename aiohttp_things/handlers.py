@@ -140,7 +140,7 @@ class JSONMixin(ContextMixin, metaclass=ABCMeta):
         return json_response(self.context, **kwargs)
 
 
-class ResponseFormatMixin(Jinja2Mixin, JSONMixin):
+class ResponseFormatMixin(AbstractView, metaclass=ABCMeta):
     response_format: str
 
     def __init__(self, request: Request) -> None:
