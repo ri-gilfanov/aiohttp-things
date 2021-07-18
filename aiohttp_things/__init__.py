@@ -12,7 +12,7 @@ from aiohttp_things.handlers import (
     ResponseFormatMixin,
 )
 
-__version__ = '0.10.1'
+__version__ = '0.11.0'
 __all__ = [
     'handlers',
     'views',
