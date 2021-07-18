@@ -8,8 +8,8 @@ from aiohttp import web
 from aiohttp.hdrs import METH_GET
 from aiohttp.test_utils import make_mocked_request
 
-from aiohttp_things import views
-from aiohttp_things.views import (
+from aiohttp_things import handlers
+from aiohttp_things.handlers import (
     ContextMixin,
     ItemMixin,
     Jinja2Mixin,
@@ -95,11 +95,11 @@ async def test_jinja2_mixin() -> None:
     )
     req = make_mocked_request(METH_GET, '/', app=app)
 
-    views.HAS_AIOHTTP_JINJA2 = False
+    handlers.HAS_AIOHTTP_JINJA2 = False
     with pytest.raises(ImportError):
         view = Jinja2View(req)
 
-    views.HAS_AIOHTTP_JINJA2 = True
+    handlers.HAS_AIOHTTP_JINJA2 = True
     view = Jinja2View(req)
     resp = await view.finalize_response()
     assert isinstance(resp.body, bytes)

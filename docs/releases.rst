@@ -1,5 +1,21 @@
 Releases
 ========
+Unreleased
+----------
+**Added**
+
+* ``handlers.AbstractHandler``.
+
+**Changed**
+
+* ``views`` module renamed to ``handlers``;
+* classes from ``handlers`` temporarily imported to empty ``views`` module for
+  backward compatibility.
+
+**Removed**
+
+** ``InstanceMixin`` a synonym for ``ItemMixin``.
+
 Version 0.9
 -----------
 **Added**
