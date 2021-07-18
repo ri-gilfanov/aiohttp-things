@@ -10,7 +10,7 @@ from aiohttp.web import Request, Response, StreamResponse, json_response
 from aiohttp.web_exceptions import HTTPMethodNotAllowed
 
 try:
-    import aiohttp_jinja2
+    from aiohttp_jinja2 import render_template_async
     HAS_AIOHTTP_JINJA2 = True
 except ImportError:
     HAS_AIOHTTP_JINJA2 = False
@@ -127,7 +127,7 @@ class Jinja2Mixin(ContextMixin, metaclass=ABCMeta):
             )
 
     async def finalize_response(self, **kwargs: Any) -> Response:
-        return await aiohttp_jinja2.render_template_async(
+        return await render_template_async(
             self.template,
             self.request,
             self.context,
@@ -146,3 +146,18 @@ class ResponseFormatMixin(AbstractView, metaclass=ABCMeta):
     def __init__(self, request: Request) -> None:
         super().__init__(request)
         self.response_format = self.request.match_info.get('format', '.html')
+
+
+class ResponseAutoformatMixin(ContextMixin, ResponseFormatMixin):
+    template: str
+
+    async def finalize_response(self, **kwargs: Any) -> Response:
+        if self.response_format == '.json':
+            return json_response(self.context, **kwargs)
+
+        return await render_template_async(
+            self.template,
+            self.request,
+            self.context,
+            **kwargs,
+        )

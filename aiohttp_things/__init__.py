@@ -1,5 +1,5 @@
-from aiohttp_things import handlers, views
-from aiohttp_things.handlers import (
+from aiohttp_things import views, web_handlers
+from aiohttp_things.web_handlers import (
     AbstractHandler,
     ContextMixin,
     HTTPMethodMixin,
@@ -9,12 +9,13 @@ from aiohttp_things.handlers import (
     ListMixin,
     PaginationMixin,
     PrimaryKeyMixin,
+    ResponseAutoformatMixin,
     ResponseFormatMixin,
 )
 
-__version__ = '0.11.1'
+__version__ = '0.12.0'
 __all__ = [
-    'handlers',
+    'web_handlers',
     'views',
     'AbstractHandler',
     'ContextMixin',
@@ -25,5 +26,6 @@ __all__ = [
     'ListMixin',
     'PaginationMixin',
     'PrimaryKeyMixin',
+    'ResponseAutoformatMixin',
     'ResponseFormatMixin',
 ]

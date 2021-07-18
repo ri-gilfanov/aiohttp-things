@@ -1,7 +1,7 @@
 Reference
 =========
-Views
------
+Web handlers
+------------
 .. autoclass:: aiohttp_things.AbstractHandler
   :members:
   :show-inheritance:
@@ -41,5 +41,9 @@ Response mixins
   :show-inheritance:
 
 .. autoclass:: aiohttp_things.ResponseFormatMixin
+  :members:
+  :show-inheritance:
+
+  .. autoclass:: aiohttp_things.ResponseAutoformatMixin
   :members:
   :show-inheritance:
