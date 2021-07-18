@@ -11,6 +11,7 @@ from aiohttp_things.handlers import (
     ListMixin,
     PaginationMixin,
     PrimaryKeyMixin,
+    ResponseFormatMixin,
 )
 
 __all__ = [
@@ -21,4 +22,5 @@ __all__ = [
     'ListMixin',
     'PaginationMixin',
     'PrimaryKeyMixin',
+    'ResponseFormatMixin',
 ]

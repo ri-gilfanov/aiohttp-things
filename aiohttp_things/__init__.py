@@ -8,9 +8,10 @@ from aiohttp_things.handlers import (
     ListMixin,
     PaginationMixin,
     PrimaryKeyMixin,
+    ResponseFormatMixin,
 )
 
-__version__ = '0.10.0'
+__version__ = '0.10.1'
 __all__ = [
     'handlers',
     'views',
@@ -22,4 +23,5 @@ __all__ = [
     'ListMixin',
     'PaginationMixin',
     'PrimaryKeyMixin',
+    'ResponseFormatMixin',
 ]

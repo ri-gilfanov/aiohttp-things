@@ -8,21 +8,12 @@ from aiohttp import web
 from aiohttp.hdrs import METH_GET
 from aiohttp.test_utils import make_mocked_request
 
+import aiohttp_things as ahth
 from aiohttp_things import handlers
-from aiohttp_things.handlers import (
-    ContextMixin,
-    ItemMixin,
-    Jinja2Mixin,
-    JSONMixin,
-    ListMixin,
-    PaginationMixin,
-    PrimaryKeyMixin,
-    ResponseFormatMixin,
-)
 
 
 def test_context_view() -> None:
-    class ContextView(web.View, ContextMixin):
+    class ContextView(web.View, ahth.ContextMixin):
         pass
 
     req = make_mocked_request(METH_GET, '/')
@@ -31,7 +22,7 @@ def test_context_view() -> None:
 
 
 def test_pagination_view() -> None:
-    class PaginationView(web.View, PaginationMixin):
+    class PaginationView(web.View, ahth.PaginationMixin):
         page_adapter = int
 
     req = make_mocked_request(METH_GET, '/?page=2')
@@ -41,7 +32,7 @@ def test_pagination_view() -> None:
 
 
 def test_integer_pk_view() -> None:
-    class IntegerPrimaryKeyView(web.View, PrimaryKeyMixin):
+    class IntegerPrimaryKeyView(web.View, ahth.PrimaryKeyMixin):
         pk_adapter = int
 
     pk = '1'
@@ -51,7 +42,7 @@ def test_integer_pk_view() -> None:
 
 
 def test_uuid_pk_view() -> None:
-    class UUIDPrimaryKeyView(web.View, PrimaryKeyMixin):
+    class UUIDPrimaryKeyView(web.View, ahth.PrimaryKeyMixin):
         pk_adapter = uuid.UUID
 
     pk = str(uuid.uuid4())
@@ -61,7 +52,7 @@ def test_uuid_pk_view() -> None:
 
 
 def test_item_mixin() -> None:
-    class InstanceView(web.View, ItemMixin):
+    class InstanceView(web.View, ahth.ItemMixin):
         pass
 
     req = make_mocked_request(METH_GET, '/')
@@ -72,7 +63,7 @@ def test_item_mixin() -> None:
 
 
 def test_list_mixin() -> None:
-    class ListView(web.View, ListMixin):
+    class ListView(web.View, ahth.ListMixin):
         pass
 
     req = make_mocked_request(METH_GET, '/')
@@ -84,7 +75,7 @@ def test_list_mixin() -> None:
 
 
 async def test_jinja2_mixin() -> None:
-    class Jinja2View(web.View, Jinja2Mixin):
+    class Jinja2View(web.View, ahth.Jinja2Mixin):
         template = 'test.jinja2'
 
     app = web.Application()
@@ -107,7 +98,7 @@ async def test_jinja2_mixin() -> None:
 
 
 async def test_json_mixin() -> None:
-    class JSONView(web.View, JSONMixin):
+    class JSONView(web.View, ahth.JSONMixin):
         pass
 
     req = make_mocked_request(METH_GET, '/')
@@ -120,7 +111,7 @@ async def test_json_mixin() -> None:
 
 
 async def test_response_format_mixin() -> None:
-    class ResponseFormatView(web.View, ResponseFormatMixin):
+    class ResponseFormatView(web.View, ahth.ResponseFormatMixin):
         pass
 
     req = make_mocked_request(METH_GET, '/some', match_info={'format': '.html'})

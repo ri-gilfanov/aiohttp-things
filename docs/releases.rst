@@ -1,10 +1,10 @@
 Releases
 ========
-Unreleased
-----------
+Version 0.10
+------------
 **Added**
 
-* ``handlers.AbstractHandler``.
+* ``AbstractHandler``.
 
 **Changed**
 
