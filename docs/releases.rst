@@ -1,7 +1,7 @@
 Releases
 ========
-Unreleased
-----------
+Version 0.13
+------------
 **Added**
 
 * ``paginator`` attribute to ``PaginationMixin``.

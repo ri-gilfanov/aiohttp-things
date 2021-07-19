@@ -36,10 +36,6 @@ class AbstractHandler(AbstractView, metaclass=ABCMeta):
 
 
 class ContextMixin(AbstractView, metaclass=ABCMeta):
-    """
-    Class based view mixin with context attribute.
-    """
-    #: Dictionary for JSON response or HTML template response.
     context: Dict[str, Any]
 
     def __init__(self, request: Request) -> None:
@@ -82,14 +78,7 @@ class PaginationMixin(AbstractView, metaclass=ABCMeta):
 
 
 class PrimaryKeyMixin(AbstractView, metaclass=ABCMeta):
-    """
-    Class based view mixin with primary key attribute.
-    """
-    #: Primary key from path variable for select an object from database.
-    #: Use regular expressions in routes for safe input
     pk: Any = None
-
-    #: Callable object for converting a primary key.
     pk_adapter: Callable[..., Any]
 
     def __init__(self, request: Request) -> None:
