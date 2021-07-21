@@ -1,5 +1,17 @@
 Releases
 ========
+Version 0.14
+------------
+**Added**
+
+* Added ``page_key`` attribute instead ``page`` attribute;
+* Added ``page_key_adapter`` attribute instead ``page_adapter`` attribute.
+
+**Deprecated**
+
+* ``page`` attribute is deprecated. Use `page_key`` attribute;
+* ``page_adapter`` is deprecated. Use ``page_key_adapter`` attribute.
+
 Version 0.13
 ------------
 **Added**

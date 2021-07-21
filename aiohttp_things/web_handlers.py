@@ -1,6 +1,7 @@
 """
 Expandable abstraction and mixins for AIOHTTP class based request handlers.
 """
+import warnings
 from abc import ABCMeta, abstractmethod
 from typing import Any, Awaitable, Callable, Dict, Generator, Iterable, Optional
 
@@ -67,6 +68,8 @@ class HTTPMethodMixin(AbstractHandler):
 class PaginationMixin(AbstractView, metaclass=ABCMeta):
     page: Any = None
     page_adapter: Callable[..., Any]
+    page_key: Any = None
+    page_key_adapter: Callable[..., Any]
     paginator: Any = None
 
     def __init__(self, request: Request) -> None:
@@ -75,6 +78,15 @@ class PaginationMixin(AbstractView, metaclass=ABCMeta):
         if page:
             page_adapter = getattr(self, 'page_adapter', lambda v: v)
             self.page = page_adapter(page)
+            warnings.warn(
+                '`page` and `page_adapter` attributes is deprecated. '
+                'Use `page_key` and `page_key_adapter` attributes.',
+                stacklevel=2,
+            )
+        page_key = self.request.rel_url.query.get('page_key')
+        if page_key:
+            page_key_adapter = getattr(self, 'page_key_adapter', lambda v: v)
+            self.page_key = page_key_adapter(page_key)
 
 
 class PrimaryKeyMixin(AbstractView, metaclass=ABCMeta):
