@@ -2,13 +2,26 @@
 name = "aiohttp-things"
 version = "0.14.0"
 description = "Modest utility collection for development with AIOHTTP framework."
+license = "MIT"
+
 authors = [
     "Ruslan Ilyasovich Gilfanov <ri.gilfanov@yandex.ru>",
 ]
+maintainers = [
+    "Ruslan Ilyasovich Gilfanov <ri.gilfanov@yandex.ru>",
+]
+
+readme = "README.rst"
+homepage = "https://github.com/ri-gilfanov/aiohttp-things"
+repository = "https://github.com/ri-gilfanov/aiohttp-things"
+documentation = "https://aiohttp-things.readthedocs.io/"
+
+keywords = ["aiohttp", "asyncio"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
-    # "Framework :: aiohttp",
+    "Framework :: aiohttp",
     "Framework :: AsyncIO",
+    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
@@ -21,12 +34,6 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Typing :: Typed",
 ]
-keywords = ["aiohttp", "asyncio"]
-license = "MIT License"
-readme = "README.rst"
-
-documentation = "https://aiohttp-things.readthedocs.io/"
-repository = "https://github.com/ri-gilfanov/aiohttp-things"
 
 [tool.poetry.dependencies]
 python = "^3.7"
@@ -55,7 +62,4 @@ src_paths = ["aiohttp_things", "tests"]
 extend_skip = ["example.py"]
 
 [tool.mypy]
-files = [
-    "aiohttp_things",
-    "tests",
-]
+files = ["aiohttp_things", "tests"]
