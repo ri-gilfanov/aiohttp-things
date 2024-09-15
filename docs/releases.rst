@@ -1,5 +1,28 @@
 Releases
 ========
+Version 1.0.0
+-------------
+
+**Added**
+
+* Added support for Python 3.11 and 3.12.
+
+**Removed**
+
+* Dropped support for Python 3.7.
+
+Version 0.14
+------------
+**Added**
+
+* Added Python 3.11 and 3.12 support;
+* Added ``page_key_adapter`` attribute instead ``page_adapter`` attribute.
+
+**Deprecated**
+
+* ``page`` attribute is deprecated. Use `page_key`` attribute;
+* ``page_adapter`` is deprecated. Use ``page_key_adapter`` attribute.
+
 Version 0.14
 ------------
 **Added**

@@ -1,9 +1,12 @@
 """
 Expandable abstraction and mixins for AIOHTTP class based request handlers.
 """
+
+from __future__ import annotations
+
 import warnings
 from abc import ABCMeta, abstractmethod
-from typing import Any, Awaitable, Callable, Dict, Generator, Iterable, Optional
+from typing import Any, Awaitable, Callable, Generator, Iterable
 
 from aiohttp.abc import AbstractView
 from aiohttp.hdrs import METH_ALL
@@ -12,6 +15,7 @@ from aiohttp.web_exceptions import HTTPMethodNotAllowed
 
 try:
     from aiohttp_jinja2 import render_template_async
+
     HAS_AIOHTTP_JINJA2 = True
 except ImportError:
     HAS_AIOHTTP_JINJA2 = False
@@ -21,23 +25,23 @@ REQUESTED_METHOD = Callable[[], Awaitable[StreamResponse]]
 
 
 class AbstractHandler(AbstractView, metaclass=ABCMeta):
-    def __init__(self, request: Request):
+    def __init__(self, request: Request) -> None:
         super().__init__(request)
 
     def __await__(self) -> Generator[Any, None, StreamResponse]:
         return self.handle_request().__await__()
 
     @abstractmethod
-    async def handle_request(self) -> StreamResponse:
-        ...
+    async def handle_request(self) -> StreamResponse: ...
 
     @abstractmethod
-    async def determine_requested_method(self,) -> Optional[REQUESTED_METHOD]:
-        ...
+    async def determine_requested_method(
+        self,
+    ) -> REQUESTED_METHOD | None: ...
 
 
 class ContextMixin(AbstractView, metaclass=ABCMeta):
-    context: Dict[str, Any]
+    context: dict[str, Any]
 
     def __init__(self, request: Request) -> None:
         super().__init__(request)
@@ -46,21 +50,23 @@ class ContextMixin(AbstractView, metaclass=ABCMeta):
 
 class HTTPMethodMixin(AbstractHandler):
     async def determine_requested_method(self) -> REQUESTED_METHOD:
-        await super().determine_requested_method()
+        await super().determine_requested_method()  # type: ignore
 
         http_method_name = self.request.method
         if http_method_name not in METH_ALL:
-            raise HTTPMethodNotAllowed(self.request.method, {
-                m for m in METH_ALL if hasattr(self, m.lower())})
+            raise HTTPMethodNotAllowed(
+                self.request.method, {m for m in METH_ALL if hasattr(self, m.lower())}
+            )
 
-        requested_method: REQUESTED_METHOD = getattr(
+        requested_method: REQUESTED_METHOD | None = getattr(
             self,
             http_method_name.lower(),
             None,
         )
-        if not requested_method:
-            raise HTTPMethodNotAllowed(self.request.method, {
-                m for m in METH_ALL if hasattr(self, m.lower())})
+        if requested_method is None:
+            raise HTTPMethodNotAllowed(
+                self.request.method, {m for m in METH_ALL if hasattr(self, m.lower())}
+            )
 
         return requested_method
 
@@ -74,18 +80,18 @@ class PaginationMixin(AbstractView, metaclass=ABCMeta):
 
     def __init__(self, request: Request) -> None:
         super().__init__(request)
-        page = self.request.rel_url.query.get('page')
+        page = self.request.rel_url.query.get("page")
         if page:
-            page_adapter = getattr(self, 'page_adapter', lambda v: v)
+            page_adapter = getattr(self, "page_adapter", lambda v: v)
             self.page = page_adapter(page)
             warnings.warn(
-                '`page` and `page_adapter` attributes is deprecated. '
-                'Use `page_key` and `page_key_adapter` attributes.',
+                "`page` and `page_adapter` attributes is deprecated. "
+                "Use `page_key` and `page_key_adapter` attributes.",
                 stacklevel=2,
             )
-        page_key = self.request.rel_url.query.get('page_key')
+        page_key = self.request.rel_url.query.get("page_key")
         if page_key:
-            page_key_adapter = getattr(self, 'page_key_adapter', lambda v: v)
+            page_key_adapter = getattr(self, "page_key_adapter", lambda v: v)
             self.page_key = page_key_adapter(page_key)
 
 
@@ -95,9 +101,9 @@ class PrimaryKeyMixin(AbstractView, metaclass=ABCMeta):
 
     def __init__(self, request: Request) -> None:
         super().__init__(request)
-        pk = self.request.match_info.get('pk')
+        pk = self.request.match_info.get("pk")
         if pk:
-            pk_adapter = getattr(self, 'pk_adapter', lambda v: v)
+            pk_adapter = getattr(self, "pk_adapter", lambda v: v)
             self.pk = pk_adapter(pk)
 
 
@@ -120,13 +126,14 @@ class ListMixin(AbstractView, metaclass=ABCMeta):
 class Jinja2Mixin(ContextMixin, metaclass=ABCMeta):
     template: str
 
-    def __init__(self, request: Request):
+    def __init__(self, request: Request) -> None:
         super().__init__(request)
         if not HAS_AIOHTTP_JINJA2:
-            raise ImportError(
-                'If you want use `Jinja2Mixin`, '
-                'then you need install `aiohttp-jinja2` package.'
+            msg = (
+                "If you want use `Jinja2Mixin`, "
+                "then you need install `aiohttp-jinja2` package."
             )
+            raise ImportError(msg)
 
     async def finalize_response(self, **kwargs: Any) -> Response:
         return await render_template_async(
@@ -147,14 +154,14 @@ class ResponseFormatMixin(AbstractView, metaclass=ABCMeta):
 
     def __init__(self, request: Request) -> None:
         super().__init__(request)
-        self.response_format = self.request.match_info.get('format', '.html')
+        self.response_format = self.request.match_info.get("format", ".html")
 
 
 class ResponseAutoformatMixin(ContextMixin, ResponseFormatMixin):
     template: str
 
     async def finalize_response(self, **kwargs: Any) -> Response:
-        if self.response_format == '.json':
+        if self.response_format == ".json":
             return json_response(self.context, **kwargs)
 
         return await render_template_async(
