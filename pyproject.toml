@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "aiohttp-things"
 packages = [{include = "aiohttp_things", from = "src" }]
-version = "1.0.0"
+version = "1.0.1"
 description = "Modest utility collection for development with AIOHTTP framework."
 license = "MIT"
 
@@ -31,6 +31,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Internet",
     "Topic :: Internet :: WWW/HTTP",
     "Topic :: Software Development :: Libraries",
@@ -40,14 +41,14 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.8"
-aiohttp = "^3.10.5"
+aiohttp = "^3.10.6"
 
 [tool.poetry.dev-dependencies]
 aiohttp_jinja2 = "^1.6"
 mypy = ">=1.11.2"
 pytest = ">=8.3.3"
 pytest-cov = ">=5.0.0"
-ruff = '>=0.6.5'
+ruff = '>=0.6.8'
 sphinx = ">=7.1.2"
 sphinx_rtd_theme = ">=2.0.0"
 tomli = { version = "^2.0.1", optional = true, python = "~3.8 || ~3.9 || ~3.10" }
