@@ -1,5 +1,16 @@
 Releases
 ========
+Version 1.1.0
+-------------
+**Changed**
+
+* Update dependencies.
+
+**Removed**
+
+* Dropped support for Python 3.8;
+* Removed `page` and `page_adapter` attributes (deprecated in v0.14) from `PaginationMixin` class.
+
 Version 1.0.1
 -------------
 

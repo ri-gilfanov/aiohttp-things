@@ -18,8 +18,8 @@ from aiohttp_things.web_handlers import (
 __all__ = [
     "ContextMixin",
     "ItemMixin",
-    "Jinja2Mixin",
     "JSONMixin",
+    "Jinja2Mixin",
     "ListMixin",
     "PaginationMixin",
     "PrimaryKeyMixin",

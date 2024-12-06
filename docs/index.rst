@@ -1,7 +1,7 @@
 ==============================
 aiohttp-things's documentation
 ==============================
-|ReadTheDocs| |PyPI release| |License| |Python versions| |PyPI downloads| |GitHub CI| |Codecov|
+|ReadTheDocs| |PyPI release| |License| |Python versions| |PyPI downloads| |GitHub CI|
 
 .. |ReadTheDocs| image:: https://readthedocs.org/projects/aiohttp-things/badge/?version=latest
   :target: https://aiohttp-things.readthedocs.io/en/latest/?badge=latest
@@ -15,7 +15,7 @@ aiohttp-things's documentation
   :target: https://github.com/ri-gilfanov/aiohttp-things/blob/master/LICENSE
   :alt: MIT License
 
-.. |Python versions| image:: https://img.shields.io/badge/Python-3.7%20%7C%203.8%20%7C%203.9%20%7C%203.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue
+.. |Python versions| image:: https://img.shields.io/badge/Python-3.9%20%7C%203.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue
   :target: https://pypi.org/project/aiohttp-things/
   :alt: Python version support
 
@@ -26,10 +26,6 @@ aiohttp-things's documentation
 .. |GitHub CI| image:: https://github.com/ri-gilfanov/aiohttp-things/actions/workflows/ci.yml/badge.svg?branch=master
   :target: https://github.com/ri-gilfanov/aiohttp-things/actions/workflows/ci.yml
   :alt: GitHub continuous integration
-
-.. |Codecov| image:: https://codecov.io/gh/ri-gilfanov/aiohttp-things/branch/master/graph/badge.svg
-  :target: https://codecov.io/gh/ri-gilfanov/aiohttp-things
-  :alt: codecov.io status for master branch
 
 Modest utility collection for development with `AIOHTTP
 <https://docs.aiohttp.org/>`_ framework.

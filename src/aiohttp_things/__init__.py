@@ -17,17 +17,17 @@ from aiohttp_things.web_handlers import (
 
 __version__ = version(__package__)
 __all__ = [
-    "web_handlers",
-    "views",
     "AbstractHandler",
     "ContextMixin",
     "HTTPMethodMixin",
     "ItemMixin",
-    "Jinja2Mixin",
     "JSONMixin",
+    "Jinja2Mixin",
     "ListMixin",
     "PaginationMixin",
     "PrimaryKeyMixin",
     "ResponseAutoformatMixin",
     "ResponseFormatMixin",
+    "views",
+    "web_handlers",
 ]

@@ -63,16 +63,6 @@ async def test_http_method_view() -> None:
         await get_and_post_method_view
 
 
-def test_pagination_view_deprecated() -> None:
-    class PaginationView(View, ahth.PaginationMixin):
-        page_adapter = int
-
-    req = make_mocked_request(METH_GET, "/?page=2")
-    view = PaginationView(req)
-    assert isinstance(view.page, int)
-    assert view.page == 2
-
-
 def test_pagination_view() -> None:
     class PaginationView(View, ahth.PaginationMixin):
         page_key_adapter = int
