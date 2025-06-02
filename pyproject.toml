@@ -1,15 +1,15 @@
-[tool.poetry]
+[project]
 name = "aiohttp-things"
 packages = [{include = "aiohttp_things", from = "src" }]
-version = "1.1.0"
+version = "1.1.1"
 description = "Modest utility collection for development with AIOHTTP framework."
 license = "MIT"
 
 authors = [
-    "Ruslan Ilyasovich Gilfanov <ri.gilfanov@yandex.ru>",
+    { name = "Ruslan Ilyasovich Gilfanov", email = "ri.gilfanov@yandex.ru>" },
 ]
 maintainers = [
-    "Ruslan Ilyasovich Gilfanov <ri.gilfanov@yandex.ru>",
+    { name = "Ruslan Ilyasovich Gilfanov", email = "ri.gilfanov@yandex.ru>" },
 ]
 
 readme = "README.rst"
@@ -38,16 +38,17 @@ classifiers = [
     "Typing :: Typed",
 ]
 
-[tool.poetry.dependencies]
-python = "^3.9"
-aiohttp = "^3.11.9"
+requires-python = ">=3.9,<3.14"
+dependencies = [
+    "aiohttp (>=3.12.6,<4)",
+]
 
-[tool.poetry.dev-dependencies]
-aiohttp_jinja2 = "^1.6"
-mypy = ">=1.13.0"
-pytest = ">=8.3.4"
-pytest-cov = ">=6.0.0"
-ruff = '>=0.8.2'
+[tool.poetry.group.dev.dependencies]
+aiohttp_jinja2 = ">=1.6"
+mypy = ">=1.16.0"
+pytest = ">=8.3.5"
+pytest-cov = ">=6.1.1"
+ruff = '>=0.11.12'
 sphinx = ">=7.4.7"
 sphinx_rtd_theme = ">=3.0.2"
 tomli = { version = "^2.2.1", optional = true, python = "~3.9 || ~3.10" }
